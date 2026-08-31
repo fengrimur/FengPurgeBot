@@ -1,0 +1,35 @@
+FengPurgeBot
+Copyright (C) 2026 Fengrímur
+
+FengPurgeBot is licensed under the GNU Affero General Public License,
+version 3 only (AGPL-3.0-only). See LICENSE for the complete license text.
+
+The following additional terms apply under section 7 of the GNU Affero
+General Public License, version 3:
+
+1. Attribution notice (section 7(b))
+
+   The following reasonable author attribution must be preserved in source
+   distributions and in any Appropriate Legal Notices displayed by a covered
+   work:
+
+       FengPurgeBot was developed by Fengrímur
+       (https://en.wikipedia.org/wiki/User:Fengr%C3%ADmur).
+
+2. No endorsement (section 7(d))
+
+   Neither the name of the copyright holder nor the names of its contributors
+   may be used to endorse or promote products derived from this software
+   without specific prior written permission.
+
+3. Trademark reservation (section 7(e))
+
+   This License does not grant permission to use the trade names, trademarks,
+   service marks, or product names of the Licensor, except as required for
+   reasonable and customary use in describing the origin of the Work and
+   reproducing the content of this NOTICE file.
+
+The no-endorsement wording is the standard third condition of the
+OSI-approved BSD 3-Clause License. The trademark wording is section 6 of the
+OSI-approved Apache License 2.0. AGPL-3.0 section 7 expressly permits these
+types of additional terms.

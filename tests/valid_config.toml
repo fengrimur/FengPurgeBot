@@ -1,0 +1,86 @@
+# SPDX-FileCopyrightText: 2026 Fengrímur
+# SPDX-License-Identifier: AGPL-3.0-only
+# See NOTICE for additional terms.
+
+[wiki]
+api_url = "https://en.wikipedia.org/w/api.php"
+
+[database]
+host = "tools.db.svc.wikimedia.cloud"
+port = 3306
+database = "purgebot"
+read_default_file = "~/replica.my.cnf"
+lock_name = "purgebot-dispatch"
+connect_timeout_s = 10
+read_timeout_s = 30
+write_timeout_s = 30
+
+[operator]
+auth_mode = "oauth2-owner-only"
+assert_mode = "user"
+assert_user = "FengPurgeBot"
+contact_user_agent = "FengPurgeBot/1.0 (https://en.wikipedia.org/wiki/User:FengPurgeBot; https://en.wikipedia.org/wiki/User_talk:Fengr%C3%ADmur)"
+
+[operator.secret]
+source = "env"
+location = "PURGEBOT_TEST_SECRET"
+
+[[control_surfaces]]
+page_id = 84098990
+expected_title = "User:FengPurgeBot/Requests"
+kind = "single"
+allowed_edit_levels = ["autoconfirmed", "extendedconfirmed", "templateeditor", "sysop"]
+
+[[control_surfaces]]
+page_id = 84098993
+expected_title = "User:FengPurgeBot/Requests/Fan-out"
+kind = "fanout"
+allowed_edit_levels = ["extendedconfirmed", "templateeditor", "sysop"]
+
+[schedule_catalog.once]
+kind = "once"
+
+[schedule_catalog.daily]
+kind = "interval"
+anchor_utc = "2026-01-01T00:00:00+00:00"
+interval_s = 86400
+
+[selector_policy]
+allowed_namespaces = [0, 10, 14]
+category_member_types = ["page"]
+embeddedin_redirect_filter = "nonredirects"
+direct_page_redirect_policy = "literal"
+
+[request_syntax]
+permalink_url_prefixes = ["https://en.wikipedia.org/wiki/Special:PermanentLink/"]
+
+[[request_syntax.adapters]]
+template_names = ["User:FengPurgeBot/Request"]
+field_map = { id = "request_id", action = "action", target = "target", schedule = "schedule", discussion = "discussion" }
+required_fields_single = ["request_id", "action", "target", "schedule"]
+required_fields_fanout = ["request_id", "action", "target", "schedule", "discussion"]
+allowed_actions_single = ["purge-page-cache", "refresh-page-links"]
+allowed_actions_fanout = ["refresh-category-members", "refresh-template-transclusions"]
+
+[reporting]
+mode = "log-only"
+
+[safety]
+fanout_limit = 1500
+open_fanout_targets = 1500
+target_attempts_24h = 3000
+force_attempts_24h = 1500
+effect_posts_24h = 180
+normal_batch = 50
+force_batch = 25
+post_start_interval_s = 30
+maxlag = 5
+attempts_per_target_24h = 6
+singleton_replays = 1
+retry_delays_s = [60, 300, 1800, 7200, 43200]
+retry_window_s = 86400
+worker_runtime_s = 240
+platform_timeout_s = 300
+tick_cron = "*/5 * * * *"
+http_connect_timeout_s = 5.0
+http_read_timeout_s = 25.0

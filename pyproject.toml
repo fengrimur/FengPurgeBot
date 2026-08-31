@@ -1,0 +1,30 @@
+# SPDX-FileCopyrightText: 2026 Fengrímur
+# SPDX-License-Identifier: AGPL-3.0-only
+# See NOTICE for additional terms.
+
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "purgebot"
+version = "1.0.0"
+authors = [{ name = "Fengrímur" }]
+license = "AGPL-3.0-only"
+license-files = ["LICENSE", "NOTICE"]
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "requests==2.34.2",
+    "urllib3==2.7.0",
+    "PyMySQL==1.2.0",
+    "mwparserfromhell==0.7.2",
+]
+
+[project.scripts]
+purgebot = "purgebot.__main__:main"
+
+[dependency-groups]
+test = ["pytest>=8"]
+
+[tool.setuptools]
+packages = ["purgebot"]
